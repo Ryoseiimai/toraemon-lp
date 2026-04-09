@@ -229,6 +229,98 @@ h1, h2, h3 {
   border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
+/* ===== WAIS 4指標テーブル ===== */
+.wais {
+  background: var(--black-2);
+  padding: 80px 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+}
+.wais-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.wais-label {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--crimson);
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.wais-title {
+  font-size: clamp(26px, 6vw, 36px);
+  color: var(--gold);
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+.wais-sub {
+  font-size: 15px;
+  color: var(--cream);
+  opacity: 0.85;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+.wais-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.wais-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--black);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 600px;
+}
+.wais-table thead {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(196, 30, 58, 0.08));
+}
+.wais-table th {
+  padding: 16px 18px;
+  text-align: left;
+  color: var(--gold-bright);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--gold);
+}
+.wais-table td {
+  padding: 16px 18px;
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+.wais-table tr:last-child td {
+  border-bottom: none;
+}
+.wais-table tr.highlight td {
+  background: rgba(196, 30, 58, 0.08);
+}
+.wais-table tr.highlight td:first-child {
+  color: var(--crimson);
+  font-weight: 700;
+}
+.wais-table tr.highlight td:first-child::after {
+  content: "← ここが苦手な人に";
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.wais-note {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: 0.65;
+  line-height: 1.7;
+  padding: 16px 20px;
+  border-left: 3px solid var(--gold);
+  background: rgba(212, 175, 55, 0.04);
+}
+
 /* ===== NIGATE PICKER (インタラクティブ) ===== */
 .nigate {
   background: var(--black);
@@ -804,7 +896,7 @@ footer .tora {
   <img src="toraemon.png" alt="虎衛門" class="hero-tiger">
   <h1 class="hero-title">虎衛門</h1>
   <div class="hero-reading">と ら え も ん</div>
-  <p class="hero-sub">自分のできることに集中できる<br><strong>専用AIエージェント</strong></p>
+  <p class="hero-sub">短所はAIに、長所は自分に。<br><strong>人間の短所を補完する専用AIエージェント</strong></p>
   <div class="scroll-hint">SCROLL ▼</div>
 </header>
 
@@ -836,6 +928,58 @@ footer .tora {
   </ul>
   <p>といった形で自分を壊してしまいます。</p>
   <div class="intro-conclusion">虎衛門は、この2つを同時にサポートするAIです。</div>
+</section>
+
+<!-- WAIS 4指標の科学的根拠 -->
+<section class="wais reveal">
+  <div class="wais-inner">
+    <div class="wais-label">SCIENTIFIC BASIS</div>
+    <h2 class="wais-title">人には、4つの「能力の軸」がある</h2>
+    <p class="wais-sub">
+      国際的な知能検査「WAIS」では、人の能力を4つの指標で測ります。<br>
+      人によって得意・不得意の形は違う。虎衛門は、<strong style="color: var(--gold-bright);">あなたが苦手な軸だけを補完します。</strong>
+    </p>
+
+    <div class="wais-table-wrap">
+      <table class="wais-table">
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>測るもの</th>
+            <th>ざっくり言うと</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>言語理解</td>
+            <td>言葉の知識・抽象概念</td>
+            <td>語彙力、説明する力</td>
+          </tr>
+          <tr>
+            <td>知覚推理（視覚空間）</td>
+            <td>図形・パターン・空間認識</td>
+            <td>絵や形を見て規則を見抜く力</td>
+          </tr>
+          <tr class="highlight">
+            <td>ワーキングメモリ</td>
+            <td>短期記憶・暗算</td>
+            <td>頭の中で情報を保持して操作する力</td>
+          </tr>
+          <tr>
+            <td>処理速度</td>
+            <td>単純作業の速さ</td>
+            <td>ミスなく素早くこなす力</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="wais-note">
+      ※ 例えば「ワーキングメモリ」が低いと、覚える量が増えるだけで頭が真っ白になる。<br>
+      一方で別の指標（例: 視覚空間認知）が突出して高いこともある。<br>
+      <strong style="color: var(--gold);">苦手な軸はAIに任せて、得意な軸に全力を注ぐ。</strong>それが虎衛門の役割です。
+    </p>
+  </div>
 </section>
 
 <!-- 何が苦手？ インタラクティブピッカー -->
