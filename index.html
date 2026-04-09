@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="虎衛門（とらえもん）— ADHDのやりたいことをサポートする専用AIエージェント。時間・お金・体力の「3つの盲」を同時に潰す、RPGステータス風ダッシュボード。">
+<meta property="og:title" content="虎衛門 — ADHD専用AIエージェント">
+<meta property="og:description" content="ADHDのやりたいことをサポートする専用AIエージェント。時間・お金・体力を同時に管理。">
+<meta property="og:type" content="website">
+<title>虎衛門（とらえもん）— ADHDのやりたいことをサポートする専用AIエージェント</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --black-2: #141414;
+  --black-3: #1c1c1c;
+  --gold: #d4af37;
+  --gold-bright: #f4c430;
+  --crimson: #c41e3a;
+  --crimson-deep: #8b0000;
+  --cream: #f5efe0;
+  --gray: #888;
+  --serif: "Noto Serif JP", serif;
+  --sans: "Noto Sans JP", sans-serif;
+  --max: 720px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--sans);
+  line-height: 1.8;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 80px 24px;
+  max-width: var(--max);
+  margin: 0 auto;
+  position: relative;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  padding: 40px 24px 60px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at top, rgba(212, 175, 55, 0.15), transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(196, 30, 58, 0.12), transparent 60%),
+    var(--black);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, transparent 0, transparent 2px, rgba(212, 175, 55, 0.02) 2px, rgba(212, 175, 55, 0.02) 4px);
+  pointer-events: none;
+}
+
+.hero-tiger {
+  font-size: clamp(60px, 18vw, 120px);
+  line-height: 1;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+}
+
+.hero-title {
+  font-size: clamp(48px, 14vw, 96px);
+  color: var(--gold);
+  text-shadow:
+    0 0 20px rgba(212, 175, 55, 0.4),
+    0 2px 0 var(--crimson-deep);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.hero-reading {
+  font-size: clamp(12px, 3vw, 16px);
+  color: var(--gold);
+  opacity: 0.7;
+  letter-spacing: 0.3em;
+  margin-bottom: 32px;
+}
+
+.hero-sub {
+  font-size: clamp(14px, 4vw, 18px);
+  color: var(--cream);
+  line-height: 1.6;
+  margin-bottom: 48px;
+  max-width: 420px;
+  font-weight: 700;
+}
+
+.hero-sub strong {
+  color: var(--gold-bright);
+}
+
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--crimson);
+  color: var(--crimson);
+  padding: 8px 20px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  margin-bottom: 24px;
+  background: rgba(196, 30, 58, 0.08);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ===== SECTION HEADING ===== */
+.section-label {
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--crimson);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.section-title {
+  font-size: clamp(28px, 7vw, 40px);
+  color: var(--gold);
+  margin-bottom: 32px;
+  line-height: 1.3;
+  border-left: 4px solid var(--crimson);
+  padding-left: 16px;
+}
+
+.section p {
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: var(--cream);
+}
+
+/* ===== INTRO ===== */
+.intro {
+  background: var(--black);
+  position: relative;
+}
+
+.intro ul {
+  list-style: none;
+  margin: 20px 0;
+  padding: 20px 24px;
+  background: var(--black-2);
+  border-left: 3px solid var(--gold);
+}
+
+.intro ul li {
+  font-size: 14px;
+  padding: 6px 0;
+  color: var(--cream);
+  position: relative;
+  padding-left: 20px;
+}
+
+.intro ul li::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  color: var(--crimson);
+  font-size: 10px;
+  top: 12px;
+}
+
+.intro-conclusion {
+  margin-top: 32px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* ===== AXIS BLOCK ===== */
+.axis {
+  background: var(--black-2);
+  max-width: 100%;
+  padding: 80px 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.axis-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.axis-number {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--crimson);
+  letter-spacing: 0.3em;
+  font-weight: 700;
+}
+
+.axis-title {
+  font-size: clamp(26px, 7vw, 36px);
+  color: var(--gold);
+  margin: 8px 0 24px;
+  line-height: 1.3;
+}
+
+.axis-desc {
+  font-size: 15px;
+  color: var(--cream);
+  margin-bottom: 28px;
+  line-height: 1.8;
+}
+
+.feature-list {
+  list-style: none;
+  counter-reset: feat;
+}
+
+.feature-list li {
+  counter-increment: feat;
+  padding: 20px 0 20px 52px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  position: relative;
+}
+
+.feature-list li::before {
+  content: counter(feat);
+  position: absolute;
+  left: 0;
+  top: 18px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--gold);
+  width: 36px;
+  text-align: center;
+  border-bottom: 2px solid var(--crimson);
+  padding-bottom: 2px;
+}
+
+.feat-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.feat-desc {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ===== AXIS 2 ===== */
+.axis-2 {
+  background: var(--black-3);
+}
+
+.axis-2 .feature-list li::before {
+  color: var(--crimson);
+  border-bottom-color: var(--gold);
+}
+
+/* ===== DASHBOARD SHOWCASE ===== */
+.dashboard {
+  padding: 100px 24px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08), transparent 70%),
+    var(--black);
+  max-width: 100%;
+}
+
+.dashboard-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.dashboard-label {
+  font-size: 12px;
+  color: var(--crimson);
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dashboard-title {
+  font-size: clamp(24px, 6.5vw, 36px);
+  color: var(--gold);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.dashboard-sub {
+  font-size: 14px;
+  color: var(--cream);
+  margin-bottom: 40px;
+}
+
+.status-box {
+  background: linear-gradient(180deg, #000 0%, #111 100%);
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  padding: 24px 20px;
+  text-align: left;
+  font-family: "Courier New", monospace;
+  box-shadow:
+    0 0 40px rgba(212, 175, 55, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.8);
+  margin: 0 auto 40px;
+  max-width: 380px;
+  font-size: 13px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.status-row.small {
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.bar {
+  display: inline-block;
+  vertical-align: middle;
+  letter-spacing: -2px;
+  font-size: 14px;
+}
+
+.bar.hp { color: #4ade80; }
+.bar.mp { color: #60a5fa; }
+
+.status-divider {
+  border: 0;
+  border-top: 1px dashed rgba(212, 175, 55, 0.3);
+  margin: 10px 0;
+}
+
+.blind-list {
+  list-style: none;
+  text-align: left;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.blind-list li {
+  padding: 12px 0 12px 24px;
+  font-size: 14px;
+  color: var(--cream);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  position: relative;
+}
+
+.blind-list li::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  color: var(--crimson);
+  font-size: 10px;
+  top: 16px;
+}
+
+.blind-list li strong {
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+/* ===== CTA ===== */
+.cta {
+  background:
+    linear-gradient(180deg, var(--black) 0%, var(--crimson-deep) 100%);
+  text-align: center;
+  padding: 100px 24px 80px;
+  max-width: 100%;
+  border-top: 2px solid var(--gold);
+}
+
+.cta-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-size: clamp(28px, 7vw, 40px);
+  color: var(--gold);
+  margin-bottom: 16px;
+  line-height: 1.4;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.cta-body {
+  font-size: 15px;
+  color: var(--cream);
+  margin-bottom: 32px;
+  line-height: 1.8;
+}
+
+.cta-stamp {
+  display: inline-block;
+  border: 2px solid var(--gold);
+  padding: 16px 32px;
+  margin-top: 24px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.cta-stamp-small {
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+}
+
+.cta-stamp-name {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--gold-bright);
+  margin-top: 4px;
+  font-weight: 900;
+}
+
+.cta-stamp-company {
+  font-size: 11px;
+  color: var(--cream);
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+footer {
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 10px;
+  color: var(--gray);
+  background: var(--black);
+  border-top: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+footer .tora {
+  color: var(--crimson);
+  margin: 0 8px;
+}
+
+/* ===== DESKTOP ADJUSTMENTS ===== */
+@media (min-width: 768px) {
+  body { font-size: 17px; }
+  section { padding: 120px 40px; }
+  .axis, .dashboard, .cta { padding: 120px 40px; }
+}
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .scroll-hint { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">AI版 令和の虎 エントリー</div>
+  <div class="hero-tiger">🐯</div>
+  <h1 class="hero-title">虎衛門</h1>
+  <div class="hero-reading">と ら え も ん</div>
+  <p class="hero-sub">ADHDのやりたいことをサポートする<br><strong>専用AIエージェント</strong></p>
+  <div class="scroll-hint">SCROLL ▼</div>
+</header>
+
+<!-- 虎衛門とは -->
+<section class="intro reveal">
+  <div class="section-label">WHAT IS TORAEMON</div>
+  <h2 class="section-title">虎衛門（とらえもん）とは</h2>
+  <p>ADHDのやりたいことをサポートする専用AIエージェントです。</p>
+  <p style="margin-top: 24px;">ADHD当事者は、自分の限界が分からず</p>
+  <ul>
+    <li>予定を詰め込みすぎる</li>
+    <li>お金を使いすぎる</li>
+    <li>健康管理がおろそかになり、睡眠不足や体調不良を引き起こす</li>
+  </ul>
+  <p>といった形で自分を壊してしまいます。</p>
+  <p style="margin-top: 24px;">さらに日常生活では</p>
+  <ul>
+    <li>計画を立てる</li>
+    <li>事務作業</li>
+    <li>予定調整</li>
+    <li>メッセージの返信</li>
+    <li>動画や本を最後まで消化する</li>
+    <li>手書き書類や入力作業</li>
+    <li>伝えたいことを文章にする</li>
+  </ul>
+  <p>といった「苦手」が積み重なり、続かず周りに迷惑をかけてしまう。</p>
+  <div class="intro-conclusion">虎衛門は、この2つを同時にサポートするAIです。</div>
+</section>
+
+<!-- 軸1 -->
+<section class="axis reveal">
+  <div class="axis-inner">
+    <div class="axis-number">壱 ── 軸 1</div>
+    <h2 class="axis-title">自分を壊すのを止める</h2>
+    <p class="axis-desc">大量に予定を入れたり、お金を使いすぎたりして、結局達成できず、周りに迷惑をかけてしまう。<br>虎衛門はこれを止めます。</p>
+    <ul class="feature-list">
+      <li>
+        <span class="feat-title">今日使っていいお金 ¥X,XXX</span>
+        <span class="feat-desc">月収・固定費・返済から自動逆算し、朝に1画面で表示</span>
+      </li>
+      <li>
+        <span class="feat-title">サブスク見守り／衝動買いブレーキ</span>
+        <span class="feat-desc">無駄なサブスクを検知、衝動買いをリアルタイムで止める</span>
+      </li>
+      <li>
+        <span class="feat-title">健康を害さないスケジューリング</span>
+        <span class="feat-desc">予定の詰込みをブロック／毎日更新される体力の限界検知アラート</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 軸2 -->
+<section class="axis axis-2 reveal">
+  <div class="axis-inner">
+    <div class="axis-number">弐 ── 軸 2</div>
+    <h2 class="axis-title">日常生活の苦手をサポート</h2>
+    <p class="axis-desc">ADHDの人は日常生活の「苦手」を人に頼れず、自分で抱え込んで詰みがち。<br>虎衛門が全部肩代わりします。</p>
+    <ul class="feature-list">
+      <li>
+        <span class="feat-title">今日のタスク自動まとめ</span>
+        <span class="feat-desc">Gmail・カレンダー横断で「今日やるべきこと」を自動抽出</span>
+      </li>
+      <li>
+        <span class="feat-title">MTG調整の完全自動化</span>
+        <span class="feat-desc">参加者確認から日程調整、自動連絡まで全部</span>
+      </li>
+      <li>
+        <span class="feat-title">文章作成サポート</span>
+        <span class="feat-desc">メール・文章の下書きから推敲まで伴走</span>
+      </li>
+      <li>
+        <span class="feat-title">メッセージ返信サポート</span>
+        <span class="feat-desc">LINE/Slack/Gmailの未読を1画面集約、AIが下書き作成(送信は本人)</span>
+      </li>
+      <li>
+        <span class="feat-title">YouTube・note記事の外部記憶</span>
+        <span class="feat-desc">読み込ませれば全部覚える、いつでも引き出せる</span>
+      </li>
+      <li>
+        <span class="feat-title">手書き書類のOCR→自動入力</span>
+        <span class="feat-desc">紙の書類をスマホで撮るだけでデジタル化</span>
+      </li>
+      <li>
+        <span class="feat-title">ブラウザ操作の自動化</span>
+        <span class="feat-desc">申込・申請・フォーム入力を全自動で</span>
+      </li>
+      <li>
+        <span class="feat-title">PCファイル整理＆検索代行</span>
+        <span class="feat-desc">散らかったファイルを意味で検索、整理も任せられる</span>
+      </li>
+      <li>
+        <span class="feat-title">PCアプリインストール代行</span>
+        <span class="feat-desc">セットアップの面倒な手順を全部AIが実行</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- DASHBOARD SHOWCASE -->
+<section class="dashboard reveal">
+  <div class="dashboard-inner">
+    <div class="dashboard-label">THE CORE FEATURE</div>
+    <h2 class="dashboard-title">RPGステータス風<br>1画面ダッシュボード</h2>
+    <p class="dashboard-sub">ADHDが苦手な「3つの盲」を同じ画面で同時に潰す</p>
+
+    <div class="status-box">
+      <div class="status-row">
+        <span>今井涼晴</span><span>Lv.30</span>
+      </div>
+      <hr class="status-divider">
+      <div class="status-row">
+        <span>HP</span><span><span class="bar hp">████████░░</span> 72/100</span>
+      </div>
+      <div class="status-row small">
+        <span></span><span>体力ゲージ</span>
+      </div>
+      <div class="status-row">
+        <span>MP</span><span><span class="bar mp">██████░░░░</span> 54/100</span>
+      </div>
+      <div class="status-row small">
+        <span></span><span>集中力ゲージ</span>
+      </div>
+      <hr class="status-divider">
+      <div class="status-row">
+        <span>今日使えるお金</span><span>¥ 3,200</span>
+      </div>
+      <div class="status-row">
+        <span>次の予定まで</span><span>28 分</span>
+      </div>
+    </div>
+
+    <ul class="blind-list">
+      <li><strong>時間盲</strong> — 時間の感覚が狂う</li>
+      <li><strong>金額盲</strong> — いくら使ったか分からない</li>
+      <li><strong>体力盲</strong> — 自分の限界が見えない</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2 class="cta-title">AI版 令和の虎<br>皆様のお力を貸してください</h2>
+    <p class="cta-body">
+      俺自身がADHD当事者です。<br>
+      時間もお金も体力も管理できずに<br>
+      何度も壊れてきました。<br><br>
+      同じ苦しさを抱える人を、<br>
+      虎衛門で救いたい。<br><br>
+      <strong style="color: var(--gold-bright);">2026年4月22日</strong><br>
+      虎の皆様の前で、お会いできるのを楽しみにしています。
+    </p>
+    <div class="cta-stamp">
+      <div class="cta-stamp-small">PROPOSER</div>
+      <div class="cta-stamp-name">今井 涼晴</div>
+      <div class="cta-stamp-company">RYOSEIWORLD合同会社 代表</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="tora">🐯</span> 虎衛門（とらえもん） <span class="tora">🐯</span><br>
+  © 2026 RYOSEIWORLD
+</footer>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
