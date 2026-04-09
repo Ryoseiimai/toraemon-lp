@@ -229,6 +229,131 @@ h1, h2, h3 {
   border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
+/* ===== NIGATE PICKER (インタラクティブ) ===== */
+.nigate {
+  background: var(--black);
+  padding: 80px 24px 100px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+.nigate-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.nigate-label {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--crimson);
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.nigate-title {
+  font-size: clamp(28px, 7vw, 40px);
+  color: var(--gold);
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+.nigate-sub {
+  font-size: 15px;
+  color: var(--cream);
+  margin-bottom: 36px;
+  line-height: 1.8;
+  opacity: 0.85;
+}
+.nigate-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.nigate-btn {
+  background: var(--black-2);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: var(--cream);
+  padding: 16px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+  line-height: 1.4;
+}
+.nigate-btn:hover {
+  border-color: var(--gold);
+  background: var(--black-3);
+  transform: translateY(-2px);
+}
+.nigate-btn.active {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(196, 30, 58, 0.1));
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  box-shadow: 0 0 0 1px var(--gold), 0 4px 16px rgba(212, 175, 55, 0.2);
+}
+.nigate-result {
+  background: var(--black-2);
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 32px 28px;
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.nigate-result::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold), var(--crimson));
+}
+.nigate-result-empty {
+  color: var(--cream);
+  opacity: 0.5;
+  text-align: center;
+  padding: 40px 0;
+  font-size: 15px;
+}
+.nigate-result-title {
+  font-size: 20px;
+  color: var(--gold-bright);
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.nigate-result-tag {
+  display: inline-block;
+  background: rgba(196, 30, 58, 0.15);
+  color: var(--crimson);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+.nigate-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nigate-result-list li {
+  color: var(--cream);
+  padding: 10px 0 10px 24px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  position: relative;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.nigate-result-list li:last-child {
+  border-bottom: none;
+}
+.nigate-result-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
 /* ===== AXIS BLOCK ===== */
 .axis {
   background: var(--black-2);
@@ -698,6 +823,9 @@ footer .tora {
     <li>動画や本を最後まで消化する（学習）</li>
     <li>手書き書類や入力作業</li>
     <li>伝えたいことを文章にする</li>
+    <li>お金の管理（使いすぎ・支払い漏れ）</li>
+    <li>時間の管理（予定の詰め込みすぎ）</li>
+    <li>体力の管理（無理しすぎて壊れる）</li>
   </ul>
   <p>といった「苦手」が積み重なり、続かず周りに迷惑をかけてしまう。</p>
   <p style="margin-top: 24px;">さらに自分の限界が分からず</p>
@@ -709,6 +837,174 @@ footer .tora {
   <p>といった形で自分を壊してしまいます。</p>
   <div class="intro-conclusion">虎衛門は、この2つを同時にサポートするAIです。</div>
 </section>
+
+<!-- 何が苦手？ インタラクティブピッカー -->
+<section class="nigate reveal">
+  <div class="nigate-inner">
+    <div class="nigate-label">WHAT'S YOUR WEAKNESS</div>
+    <h2 class="nigate-title">何が苦手？</h2>
+    <p class="nigate-sub">苦手を押すと、虎衛門が何をしてくれるか見られます。</p>
+
+    <div class="nigate-buttons" id="nigateButtons">
+      <!-- JSで生成 -->
+    </div>
+
+    <div class="nigate-result" id="nigateResult">
+      <div class="nigate-result-empty">↑ 気になる苦手を選んでみて</div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const items = [
+    {
+      key: "plan",
+      label: "計画を立てる",
+      tag: "段取り",
+      actions: [
+        "やりたいことを聞くだけで、タスクを細かく分解して順番に並べる",
+        "優先順位を自動でつけて、今日やることだけに絞り込む",
+        "カレンダーに自動で時間割を埋め込む",
+        "『この量は無理』をAIが判断して予定をカットしてくれる"
+      ]
+    },
+    {
+      key: "office",
+      label: "事務作業",
+      tag: "ルーティン",
+      actions: [
+        "請求書・領収書を写真で撮るだけで自動整理",
+        "繰り返し入力を全部自動化",
+        "ファイル名・フォルダ整理を自動で命名",
+        "定型文のメール・チャットを一瞬で作成"
+      ]
+    },
+    {
+      key: "schedule",
+      label: "予定調整",
+      tag: "日程",
+      actions: [
+        "相手との空き時間を自動でマッチング",
+        "調整メッセージを自動で作成して送信下書き",
+        "ダブルブッキングをリアルタイムで検知",
+        "リマインダーを自動で設定"
+      ]
+    },
+    {
+      key: "time_keep",
+      label: "時間を守る（遅刻しない）",
+      tag: "遅刻防止",
+      actions: [
+        "出発時間を逆算して『◯分後に家を出て』と通知",
+        "準備時間・移動時間を自動計算してアラート",
+        "もし間に合わなかった時は、謝罪連絡の文面を自動で作成して送信準備",
+        "相手先・MTG内容に合わせた謝罪トーンを自動調整"
+      ]
+    },
+    {
+      key: "message",
+      label: "メッセージの確認/返信",
+      tag: "連絡",
+      actions: [
+        "未読メッセージを重要度順に自動で並び替え",
+        "返信の下書きを夜のうちに自動作成",
+        "既読未返信を検知してリマインド",
+        "雑談 / 仕事 / 緊急 を自動分類"
+      ]
+    },
+    {
+      key: "learn",
+      label: "動画や本を最後まで消化する（学習）",
+      tag: "インプット",
+      actions: [
+        "動画・本を要約して短くしてくれる",
+        "章ごとに進捗を管理して続きから再開",
+        "自分に必要な部分だけを抽出",
+        "読んだ内容をクイズ化して記憶を定着"
+      ]
+    },
+    {
+      key: "handwrite",
+      label: "手書き書類や入力作業",
+      tag: "書類",
+      actions: [
+        "スマホで撮るだけで自動テキスト化",
+        "役所・フォームへの転記を自動化",
+        "繰り返し入力するデータを覚えて自動補完",
+        "入力ミスを自動でチェック・修正"
+      ]
+    },
+    {
+      key: "writing",
+      label: "伝えたいことを文章にする",
+      tag: "アウトプット",
+      actions: [
+        "話した内容を録音→自動で文章化",
+        "相手に合わせたトーン調整（ビジネス/カジュアル）",
+        "要点を整理して短くまとめる",
+        "メール・SNS・note用にフォーマット変換"
+      ]
+    },
+    {
+      key: "money",
+      label: "お金の管理",
+      tag: "財布の番人",
+      actions: [
+        "今月使えるお金をリアルタイム表示",
+        "衝動買いを検知『このサブスク、本当に必要？』",
+        "支払い漏れ・引き落とし日の自動アラート",
+        "無駄な固定費をAIが洗い出して提案"
+      ]
+    },
+    {
+      key: "time_manage",
+      label: "時間の管理",
+      tag: "詰込み防止",
+      actions: [
+        "予定の詰め込みすぎをアラートでブロック",
+        "『今日はもう入らない』を自動判定",
+        "移動時間・休憩時間を自動で確保",
+        "週全体のバランスを見て予定を再配置"
+      ]
+    },
+    {
+      key: "stamina",
+      label: "体力の管理",
+      tag: "壊れない",
+      actions: [
+        "体力ゲージ（HP）をリアルタイム可視化",
+        "HP30%を切ったら明日の予定を自動で1件カット",
+        "睡眠不足・疲労を検知して休息を強制提案",
+        "無理をしそうな日に『今日は休もう』と止める"
+      ]
+    }
+  ];
+
+  const btnWrap = document.getElementById('nigateButtons');
+  const result = document.getElementById('nigateResult');
+
+  items.forEach(item => {
+    const btn = document.createElement('button');
+    btn.className = 'nigate-btn';
+    btn.type = 'button';
+    btn.dataset.key = item.key;
+    btn.textContent = item.label;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nigate-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      result.innerHTML = `
+        <span class="nigate-result-tag">${item.tag}</span>
+        <h3 class="nigate-result-title">${item.label}</h3>
+        <ul class="nigate-result-list">
+          ${item.actions.map(a => `<li>${a}</li>`).join('')}
+        </ul>
+      `;
+    });
+    btnWrap.appendChild(btn);
+  });
+})();
+</script>
 
 <!-- 軸1: 日常生活の苦手をサポート -->
 <section class="axis reveal">
