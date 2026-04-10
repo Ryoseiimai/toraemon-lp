@@ -1353,6 +1353,118 @@ footer .tora {
   display: inline-block;
 }
 
+/* ===== 問い合わせフォーム ===== */
+#inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.form-required {
+  color: var(--crimson);
+  margin-left: 2px;
+}
+
+.form-input,
+.form-textarea {
+  background: #0d0d0d;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 8px;
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 12px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  outline: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--gray);
+  opacity: 0.6;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-submit {
+  align-self: center;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.35);
+  color: var(--black);
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  min-width: 200px;
+  padding: 16px 36px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.form-submit:hover:not(:disabled) {
+  box-shadow: 0 10px 32px rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
+}
+
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-success {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 8px;
+  color: var(--gold-bright);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.form-error {
+  background: rgba(196, 30, 58, 0.08);
+  border: 1px solid rgba(196, 30, 58, 0.4);
+  border-radius: 8px;
+  color: #f08080;
+  font-size: 14px;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.form-error a {
+  color: var(--gold-bright);
+  text-decoration: underline;
+}
+
 .contact-divider {
   display: flex;
   align-items: center;
@@ -2311,11 +2423,81 @@ footer .tora {
     </p>
 
     <div class="contact-form-area">
-      <div class="contact-form-placeholder">
-        <p>Googleフォーム（準備中）</p>
-        <code><!-- GOOGLE FORM URL をここに埋め込む --></code>
-      </div>
+      <form id="inquiry-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="inq-name">お名前 <span class="form-required">*</span></label>
+          <input class="form-input" type="text" id="inq-name" name="name" placeholder="例: 山田 太郎" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inq-email">メールアドレス <span class="form-required">*</span></label>
+          <input class="form-input" type="email" id="inq-email" name="email" placeholder="例: taro@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inq-message">どんなことでお悩みですか？ <span class="form-required">*</span></label>
+          <textarea class="form-textarea" id="inq-message" name="message" rows="5" placeholder="例: 仕事の締め切りをいつも忘れてしまいます。時間管理が苦手で…" required></textarea>
+        </div>
+        <button class="form-submit" type="submit" id="inq-submit">送信する</button>
+        <div class="form-success" id="inq-success" style="display:none;">
+          ありがとうございます！24時間以内にご連絡します。
+        </div>
+        <div class="form-error" id="inq-error" style="display:none;">
+          送信に失敗しました。お手数ですが <a href="mailto:kaeru3160@gmail.com">kaeru3160@gmail.com</a> へ直接ご連絡ください。
+        </div>
+      </form>
     </div>
+
+    <script>
+    (function() {
+      var GAS_URL = 'https://script.google.com/macros/s/AKfycbyTBqS5fWwRkj5iYN0cGP3ckKX_VgSXp0sGQmrRvDOUAuY-IvtozmDt_UwTC-GyCI9YBw/exec';
+
+      document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = e.target;
+        var name = form.querySelector('#inq-name').value.trim();
+        var email = form.querySelector('#inq-email').value.trim();
+        var message = form.querySelector('#inq-message').value.trim();
+        var submitBtn = document.getElementById('inq-submit');
+        var successEl = document.getElementById('inq-success');
+        var errorEl = document.getElementById('inq-error');
+
+        // リセット
+        successEl.style.display = 'none';
+        errorEl.style.display = 'none';
+
+        // 簡易バリデーション
+        if (!name || !email || !message) {
+          errorEl.textContent = 'すべての項目を入力してください。';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '送信中…';
+
+        fetch(GAS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ name: name, email: email, message: message })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.ok) {
+            form.reset();
+            successEl.style.display = 'block';
+            submitBtn.style.display = 'none';
+          } else {
+            throw new Error(data.message || '不明なエラー');
+          }
+        })
+        .catch(function(err) {
+          errorEl.innerHTML = '送信に失敗しました。お手数ですが <a href="mailto:kaeru3160@gmail.com">kaeru3160@gmail.com</a> へ直接ご連絡ください。';
+          errorEl.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = '送信する';
+        });
+      });
+    })();
+    </script>
 
     <div class="contact-divider"><span>または</span></div>
 
