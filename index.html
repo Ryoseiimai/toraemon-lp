@@ -651,6 +651,122 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
+/* ===== STATUS (実装状況) ===== */
+.status {
+  background: var(--black-2);
+  padding: 100px 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  max-width: 100%;
+}
+.status-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.status-label {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--crimson);
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.status-title {
+  font-size: clamp(26px, 7vw, 38px);
+  color: var(--gold);
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+.status-lead {
+  font-size: 16px;
+  color: var(--cream);
+  line-height: 1.8;
+  margin-bottom: 28px;
+  font-weight: 700;
+}
+.status-lead strong { color: var(--gold-bright); }
+.status-version {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold-bright);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+  margin-bottom: 24px;
+  background: rgba(212, 175, 55, 0.06);
+}
+.status-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.status-badge {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(212, 175, 55, 0.04);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.status-cats {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 560px) {
+  .status-cats { grid-template-columns: 1fr 1fr; }
+}
+.status-cats li {
+  background: var(--black);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-left: 3px solid var(--crimson);
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--cream);
+  line-height: 1.5;
+  min-height: 44px;
+}
+.status-cats li strong {
+  display: block;
+  color: var(--gold-bright);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.status-facts {
+  list-style: none;
+  padding: 20px 22px;
+  margin: 0;
+  background: var(--black);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 8px;
+}
+.status-facts li {
+  position: relative;
+  padding: 8px 0 8px 24px;
+  font-size: 14px;
+  color: var(--cream);
+  line-height: 1.7;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+}
+.status-facts li:last-child { border-bottom: none; }
+.status-facts li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: var(--gold);
+  font-weight: 900;
+}
+
 /* ===== CTA ===== */
 .cta {
   background:
@@ -680,6 +796,57 @@ h1, h2, h3 {
   margin-bottom: 32px;
   line-height: 1.8;
 }
+
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 16px 28px;
+  border-radius: 6px;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  min-height: 48px;
+  min-width: 260px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cta-btn-primary {
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color: var(--black);
+  border: 1px solid var(--gold);
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.3);
+}
+.cta-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(212, 175, 55, 0.4);
+}
+.cta-btn-ghost {
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--gold-bright);
+  border: 1px solid var(--gold);
+}
+.cta-btn-ghost:hover {
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-2px);
+}
+.cta-contact {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: 0.85;
+  margin-bottom: 24px;
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.05em;
+}
+.cta-contact a { color: var(--gold-bright); text-decoration: none; }
+.cta-contact a:hover { text-decoration: underline; }
 
 .cta-stamp {
   display: inline-block;
@@ -728,7 +895,7 @@ footer .tora {
 @media (min-width: 768px) {
   body { font-size: 17px; }
   section { padding: 120px 40px; }
-  .axis, .dashboard, .cta { padding: 120px 40px; }
+  .axis, .dashboard, .cta, .status { padding: 120px 40px; }
 }
 
 /* ===== STORY SECTION ===== */
@@ -1368,19 +1535,72 @@ footer .tora {
   </div>
 </section>
 
+<!-- STATUS 実装状況 -->
+<section class="status reveal">
+  <div class="status-inner">
+    <div class="status-label">CURRENT BUILD</div>
+    <h2 class="status-title">モックではない。<br>47機能のPWAが、もう動いている。</h2>
+    <div class="status-version">VERSION v0.9.4 / 2026-04-10</div>
+    <p class="status-lead">
+      構想でも企画書でもない。<br>
+      <strong>iPhoneのホーム画面に追加して、毎日使えるPWA</strong>が、すでに稼働中です。<br>
+      代表自身がADHD当事者として、毎日dogfoodしています。
+    </p>
+
+    <div class="status-badges">
+      <span class="status-badge">47機能</span>
+      <span class="status-badge">10カテゴリ</span>
+      <span class="status-badge">PWA対応</span>
+      <span class="status-badge">Service Worker オフライン</span>
+      <span class="status-badge">iOS HIG 準拠</span>
+      <span class="status-badge">Playwright 視覚監査 clean</span>
+    </div>
+
+    <ul class="status-cats">
+      <li><strong>頭を預ける</strong>記憶・タスク・返信・書類の置き場所</li>
+      <li><strong>体を守る</strong>水分・睡眠・無理の早期警告</li>
+      <li><strong>お金</strong>支出・衝動買い・家計の見える化</li>
+      <li><strong>決める・動き出す</strong>優柔不断と先延ばしを解除</li>
+      <li><strong>寝る・朝・計画</strong>入眠と朝の起動、一日の下書き</li>
+      <li><strong>集中・防御</strong>ハイパーフォーカスと割り込みの制御</li>
+      <li><strong>心・内省・褒める</strong>感情の記録と立て直し</li>
+      <li><strong>対外コミュニケーション</strong>返信・連絡・断り文の補助</li>
+      <li><strong>自己理解・記録</strong>1日・1週・1ヶ月の棚卸し</li>
+      <li><strong>命綱 SOS</strong>全ページから常駐FABでワンタップ到達</li>
+    </ul>
+
+    <ul class="status-facts">
+      <li>命綱SOSは全ページ右下に常駐。どのページからでもワンタップで救援画面へ</li>
+      <li>iOS HIG準拠のタップ領域（44px以上）・safe-area対応・片手操作前提</li>
+      <li>Service Workerで主要画面はオフラインでも起動する</li>
+      <li>Playwright視覚監査:JSエラー 0 / 横スクロール 0 / 全タップ領域 44px+</li>
+      <li>代表が毎日dogfood中。壊れた箇所はその日のうちに直している</li>
+    </ul>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta">
   <div class="cta-inner">
     <h2 class="cta-title">皆様のお力を貸してください</h2>
     <p class="cta-body">
       私自身がADHD当事者です。<br>
-      時間もお金も体力も管理できずに<br>
-      何度も壊れてきました。<br><br>
+      時間もお金も体力も管理できずに、何度も壊れてきました。<br><br>
       同じ苦しさを抱える人を、<br>
       虎衛門で救いたい。<br><br>
-      支援・ご協力いただける皆様との<br>
-      ご縁を楽しみにしています。
+      実機はもう動いています。<br>
+      実際に触っていただける場をご用意します。
     </p>
+
+    <div class="cta-actions">
+      <a class="cta-btn cta-btn-primary" href="mailto:kaeru3160@gmail.com?subject=%E8%99%8E%E8%A1%9B%E9%96%80%20%E5%AE%9F%E6%A9%9F%E3%83%87%E3%83%A2%E5%B8%8C%E6%9C%9B&body=%E8%99%8E%E8%A1%9B%E9%96%80%E3%81%AE%E5%AE%9F%E6%A9%9F%E3%83%87%E3%83%A2%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E3%81%94%E6%89%80%E5%B1%9E%EF%BC%9A%0A%E3%81%94%E7%94%A8%E4%BB%B6%EF%BC%9A%0A">実機を試したい方はこちら</a>
+      <a class="cta-btn cta-btn-ghost" href="mailto:kaeru3160@gmail.com?subject=%E8%99%8E%E8%A1%9B%E9%96%80%20%E6%94%AF%E6%8F%B4%E3%83%BB%E3%81%94%E7%B8%81%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87">支援・ご縁のご相談はこちら</a>
+    </div>
+
+    <p class="cta-contact">
+      CONTACT:&nbsp;<a href="mailto:kaeru3160@gmail.com">kaeru3160@gmail.com</a>
+    </p>
+
     <div class="cta-stamp">
       <div class="cta-stamp-small">PROPOSER</div>
       <div class="cta-stamp-name">今井 涼晴</div>
