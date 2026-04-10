@@ -837,6 +837,41 @@ h1, h2, h3 {
   background: rgba(212, 175, 55, 0.08);
   transform: translateY(-2px);
 }
+.cta-btn-gold {
+  background: linear-gradient(135deg, var(--gold), #b8860b);
+  color: var(--black);
+  font-weight: 700;
+  letter-spacing: .08em;
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+.cta-btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+}
+.footer-sns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.footer-sns a {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: .1em;
+  padding: 4px 12px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+  transition: all .2s;
+}
+.footer-sns a:hover {
+  background: var(--gold);
+  color: var(--black);
+}
 .cta-contact {
   font-size: 13px;
   color: var(--cream);
@@ -1594,6 +1629,7 @@ footer .tora {
 
     <div class="cta-actions">
       <a class="cta-btn cta-btn-primary" href="mailto:kaeru3160@gmail.com?subject=%E8%99%8E%E8%A1%9B%E9%96%80%20%E5%AE%9F%E6%A9%9F%E3%83%87%E3%83%A2%E5%B8%8C%E6%9C%9B&body=%E8%99%8E%E8%A1%9B%E9%96%80%E3%81%AE%E5%AE%9F%E6%A9%9F%E3%83%87%E3%83%A2%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E3%81%94%E6%89%80%E5%B1%9E%EF%BC%9A%0A%E3%81%94%E7%94%A8%E4%BB%B6%EF%BC%9A%0A">実機を試したい方はこちら</a>
+      <a class="cta-btn cta-btn-gold" href="mailto:kaeru3160@gmail.com?subject=%E8%99%8E%E8%A1%9B%E9%96%80%20Phase%200%20%E5%85%88%E8%A1%8C%E7%99%BB%E9%8C%B2&body=%E8%99%8E%E8%A1%9B%E9%96%80%20Phase%200%20%E3%81%AE%E5%85%88%E8%A1%8C%E7%99%BB%E9%8C%B2%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%EF%BC%9A%0A%E4%B8%80%E7%95%AA%E5%BF%98%E3%82%8C%E3%81%9F%E3%81%8F%E3%81%AA%E3%81%84%E3%81%93%E3%81%A8%EF%BC%9A%0A">Phase 0 先行登録（4月末リリース）</a>
       <a class="cta-btn cta-btn-ghost" href="mailto:kaeru3160@gmail.com?subject=%E8%99%8E%E8%A1%9B%E9%96%80%20%E6%94%AF%E6%8F%B4%E3%83%BB%E3%81%94%E7%B8%81%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87">支援・ご縁のご相談はこちら</a>
     </div>
 
@@ -1610,6 +1646,10 @@ footer .tora {
 </section>
 
 <footer>
+  <div class="footer-sns">
+    <a href="https://note.com/ryosei3160" target="_blank" rel="noopener">note</a>
+    <a href="http://ryoseiworld.weblike.jp/" target="_blank" rel="noopener">HP</a>
+  </div>
   <span class="tora">🐯</span> 虎衛門（とらえもん） <span class="tora">🐯</span><br>
   © 2026 RYOSEIWORLD
 </footer>
