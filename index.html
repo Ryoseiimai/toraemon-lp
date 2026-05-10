@@ -926,82 +926,6 @@ footer .tora {
   margin: 0 8px;
 }
 
-/* ===== 令和の虎バナー ===== */
-.reiwatora-banner {
-  background: linear-gradient(135deg, #0a0a00 0%, #1a1500 40%, #0a0a00 100%);
-  border-top: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
-  padding: 18px 20px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.reiwatora-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.12), transparent 50%),
-    radial-gradient(ellipse at 80% 50%, rgba(212, 175, 55, 0.08), transparent 50%);
-  pointer-events: none;
-}
-
-.reiwatora-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  max-width: var(--max);
-  margin: 0 auto;
-  position: relative;
-}
-
-.reiwatora-icon {
-  font-size: 28px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.reiwatora-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-}
-
-.reiwatora-label {
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  color: var(--gold);
-  opacity: 0.75;
-  font-weight: 700;
-  font-family: var(--serif);
-}
-
-.reiwatora-main {
-  font-family: var(--serif);
-  font-size: clamp(14px, 4vw, 18px);
-  font-weight: 900;
-  color: var(--gold-bright);
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
-}
-
-.reiwatora-badge {
-  display: inline-block;
-  background: rgba(196, 30, 58, 0.15);
-  border: 1px solid var(--crimson);
-  color: var(--crimson);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  padding: 3px 10px;
-  border-radius: 2px;
-  margin-top: 4px;
-}
-
 /* ===== 料金プラン ===== */
 .pricing {
   background: var(--black-2);
@@ -1757,19 +1681,6 @@ footer .tora {
   <div class="hero-badge">47機能 PWA 稼働中 ─ v1.2</div>
   <div class="scroll-hint">SCROLL ▼</div>
 </header>
-
-<!-- 令和の虎バナー -->
-<div class="reiwatora-banner">
-  <div class="reiwatora-inner">
-    <div class="reiwatora-icon">🐯</div>
-    <div class="reiwatora-text">
-      <div class="reiwatora-label">FEATURED IN</div>
-      <div class="reiwatora-main">令和の虎　2026年4月　出演</div>
-      <div class="reiwatora-badge">REIWATORA × TORAEMON</div>
-    </div>
-    <div class="reiwatora-icon">🐯</div>
-  </div>
-</div>
 
 <!-- 虎衛門とは -->
 <section class="intro reveal">
